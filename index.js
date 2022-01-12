@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGO_URL||"",(error,res)=>{
 app.set('view engine','ejs')
 app.set('views', path.join(__dirname, 'views'));
 app.use("/meet",express.static(path.join(__dirname,'public')))
-app.use(express.static(path.join(__dirname,'build')))
+app.use(express.static(path.join(__dirname,'frontend/build')))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/peerjs',peerServrer)
@@ -124,7 +124,7 @@ app.use((error,req,res,next)=>{
 })
 
 app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname, 'build/index.html'))
+    res.sendFile(path.join(__dirname, 'frontend/build/index.html'))
 })
 
 

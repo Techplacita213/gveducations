@@ -1,0 +1,46 @@
+#chevDown{
+   display:none 
+}
+#chevUp{
+    display:none 
+ }
+ #hov:hover{
+    background-color: rgba(0,0,0,0.2);
+ }
+@media only screen and (max-width: 800px) {
+    #chevDown{
+        display:block 
+     }
+     #chevUp{
+         display:block 
+      }
+    #h2{
+        display:none
+    }
+    #h1{
+        width: 100% !important;
+    }
+    #navb{
+        display:none !important
+    }
+    .chevDown{
+        animation-name: spn;
+        animation-duration: 0.5s;
+
+    }
+    .chevUp{
+        animation-name: spn;
+        animation-duration: 0.5s;
+
+    }
+    #para{
+        width: 100% !important;
+        margin-bottom: 40px;
+    }
+    #cdh{
+        font-size:25px;
+    }
+  }
+  @keyframes spn {
+    100%{transform: rotate(180deg);}
+}
