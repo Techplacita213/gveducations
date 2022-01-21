@@ -68,31 +68,27 @@ Route.post('/signup',async (req,res)=>{
        // console.log("run")
         const {error}= await ValidSign(req.body)
         if(error){
-            res.status(400).send(error.message)
+            res.status(400).send({message:error.message})
             return;
         }
        
         if(req.body.teach&&!/^[\w.-]+@[\w.-]+$/.test(req.body.upiId))
             return res.status(400).send("Enter valid upi ID")
         const emailCheck= await User.findOne({email:req.body.email})
-        if(emailCheck)return res.status(400).send("email already exists") 
+        if(emailCheck)return res.status(400).send({message:"email already exists"}) 
 
         const salt =await bcrypt.genSalt(10)
         const hashpassword= await bcrypt.hash(req.body.password,salt)
     
         const user = new User({...req.body,password:hashpassword})
         
-        try{   
-            const saved=await user.save()
-            res.send({saved:user._id})
-        }
-        catch(err){
-            console.log
-            res.status(400).send(err)
-        }
+        const saved=await user.save()
+        res.send({saved:user._id})
+        
     }
     catch(err){
         console.log(err)
+        res.status(400).send({message:err.message})
     }
 })
 

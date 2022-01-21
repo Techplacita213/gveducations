@@ -2,9 +2,10 @@ import React,{useEffect} from 'react'
 import {Card} from 'react-bootstrap'
 import {FaStar} from 'react-icons/fa'
 import {FaGraduationCap} from 'react-icons/fa'
+import { LIVE_URL } from '../utils/url'
 
 const durl="http://localhost:5000/"
-const purl="/"
+const purl=LIVE_URL
 
 export default function Course({data}) {
     useEffect(()=>{
@@ -31,10 +32,10 @@ export default function Course({data}) {
                         </div> */}
                     </div>
                 </div>
-                <img  style={{top:"0",right:"0",bottom:"0",left:"0",position:'absolute',width:"100%",height:"100%",zIndex:"1"}} src={purl+data.productImage}/>
+                <img  style={{top:"0",right:"0",bottom:"0",left:"0",position:'absolute',width:"100%",height:"100%",zIndex:"1"}} src={data.productImage}/>
             </Card>
             <Card.Body style={{fontFamily:"sans-serif",padding:"5px"}}>
-                <Card.Title style={{fontWeight:"800"}}>JS Course</Card.Title>
+                <Card.Title style={{fontWeight:"800"}}>{data.name}</Card.Title>
                 <div style={{width:"90%",margin:"auto",display:"flex",flexDirection:"row",justifyContent:"space-between",marginTop:"25px",marginBottom:"25px"}}>
                     <div> <FaGraduationCap style={{marginRight:"10px",fontSize:"22px",color:"grey"}} />{data.Instructor}</div>
                     <div>Batch Size : {data.Features.batchSize||"20"}</div>

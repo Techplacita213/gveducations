@@ -46,13 +46,18 @@ const courseSchema=mongoose.Schema({
     },
     productImage:{
         type:String,
-        require:true
+        required:true
     },
     roomId:{
         type:mongoose.SchemaTypes.ObjectId
     },
     date:{
-        type:Date
+        type:Date,
+        required:true
+    },
+    instructorID:{
+        type:mongoose.SchemaTypes.ObjectId,
+        required:true
     }
 
 })

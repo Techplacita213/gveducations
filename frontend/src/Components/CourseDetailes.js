@@ -9,6 +9,7 @@ import axios from 'axios'
 import Cirr from './Cirr'
 import {context} from './Context'
 import CalenderApi from './CalenderApi'
+import { LIVE_URL } from '../utils/url'
 
 
 function loadScript(src) {
@@ -27,7 +28,7 @@ function loadScript(src) {
 
 export default function CourseDetailes(props) {
     const obj=useContext(context)
-   const [data,setData]=useState("");
+   const [data,setData]=useState({});
    async function pay(price,email,phone){
         const res = await loadScript();
         if(!res){
@@ -44,9 +45,7 @@ export default function CourseDetailes(props) {
             "image": "https://example.com/your_logo",
             "order_id": "1", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature)
+                console.log(response)
             },
             "prefill": {
                 "email": email,
@@ -67,7 +66,7 @@ export default function CourseDetailes(props) {
                 }
               }
         };
-        await axios.post('/payment/orderID',{
+        await axios.post(LIVE_URL+'payment/orderID',{
             amount:options.amount,
         }).then((res)=>{
             options.order_id=res.data
@@ -91,7 +90,7 @@ export default function CourseDetailes(props) {
     const {name} = useParams()
     const [selected,setSelected]=useState({
         O:"solid purple 3px",
-        Sel:<Overview text={data.overview}/>
+        Sel:<Overview data={data} />
     })
     const get=async ()=>{
         const val=await localStorage.getItem(`${name}`)
@@ -102,11 +101,11 @@ export default function CourseDetailes(props) {
                 await setData(dat)
                 await localStorage.setItem(`${name}`,JSON.stringify(dat))
             }
-            clickShow('O',<Overview text={JSON.parse(localStorage.getItem(`${name}`)).overview}/>)
+            clickShow('O',<Overview data={data}/>)
         }
         else{
            await setData(await JSON.parse(localStorage.getItem(`${name}`)))
-           clickShow('O',<Overview text={JSON.parse(localStorage.getItem(`${name}`)).overview}/>)
+           clickShow('O',<Overview data={JSON.parse(localStorage.getItem(`${name}`))}/>)
         }
        
     }
@@ -121,11 +120,12 @@ export default function CourseDetailes(props) {
         })
 
     }
+    console.log(obj.user)
     return (
         data!==""?
         <div>
             <div  style={{width:"85%",margin:"auto",padding:"1.5vw",boxShadow:"0px 0px 25px rgba(0,0,0,0.3)",boxSizing:"border-box",borderRadius:"7px",marginTop:"90px"}}>
-                <h1 id="cdh" style={{marginLeft:"15px",fontWeight:"800"}}>{name} online course</h1>
+                <h1 id="cdh" style={{marginLeft:"15px",fontWeight:"800"}}>{name}</h1>
                 <div style={{width:"100%",display:"flex",flexDirection:"row",margin:"25px",marginTop:"30px",marginBottom:"30px"}}>
                     <div style={{width:"25%",borderRight:"solid rgba(0,0,0,0.3) 1px"}}>
                         <div>
@@ -135,7 +135,7 @@ export default function CourseDetailes(props) {
                     </div>
                     <div style={{width:"25%",borderRight:"solid rgba(0,0,0,0.3) 1px",marginLeft:"15px"}}>
                         <div>
-                            <div style={{fontWeight:"700"}}>Cateo</div>
+                            <div style={{fontWeight:"700"}}>Category</div>
                             <div>{data.cateo||"any"}</div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ export default function CourseDetailes(props) {
                 </div>
                 <div style={{maxWidth:"300px",display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginTop:"20px",marginBottom:"15px"}}>
                     <h3>Rs {data.price}</h3>
-                    {obj?.user?.courses?.includes(data.name)?"The Link Will Appear Here":obj?.user?.email!==data?.email?<RoundButton func={()=>pay(data.price,obj.user.email,obj.user.phone)} text="Buy This Course" width="140px" height="50px" backgroundColor="purple"/>:<CalenderApi/>}
+                    {obj?.user?.courses?.includes(data.name)?"The Link Will Appear Here":obj.user._id===data.instructorID||!obj.isLogged?<></>:<RoundButton func={()=>pay(data.price,obj.user.email,obj.user.phone)} text="Buy This Course" width="140px" height="50px" backgroundColor="purple"/>}
                 </div>
             </div>
             <div style={{margin:"auto",marginTop:"40px",width:"85%",marginBottom:"30px",boxShadow:"0px 0px 25px rgba(0,0,0,0.4)",borderRadius:"5px"}}>
@@ -168,20 +168,20 @@ export default function CourseDetailes(props) {
             <div style={{width:"100%",height:"50vh",background:"url(https://reptro.xoothemes.com/wp-content/uploads/2018/04/markus-spiske-357131-unsplash-copy-1-1200x560.jpg) center no-repeat",backgroundSize:"cover"}}></div>
             <div style={{width:"100%",display:"flex",flexDirection:"row",borderBottom:"solid rgba(0,0,0,0.3) 1px ",flexWrap:"wrap"}}>
                 <div onClick={()=>{
-                    clickShow('O',<Overview text={data.overview} />)
-                }} style={{width:"auto",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['O'],fontWeight:"700",padding:"5px"}}>
+                    clickShow('O',<Overview data={data} />)
+                }} style={{width:"auto",cursor:"pointer",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['O'],fontWeight:"700",padding:"5px"}}>
                     Overview
                 </div>
                 <div onClick={()=>{
                     clickShow('Cirriculum',<Cirr Topics={data.Topics}/>)
-                }} style={{width:"auto",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['Cirriculum']||"",fontWeight:"700",padding:"5px",marginLeft:"10px"}}>
+                }} style={{width:"auto",cursor:"pointer",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['Cirriculum']||"",fontWeight:"700",padding:"5px",marginLeft:"10px"}}>
                     Cirruculum
                 </div>
-                <div onClick={()=>{
+                {/* <div onClick={()=>{
                     clickShow('I',<Instructor/>)
                 }} style={{width:"auto",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['I']||"",fontWeight:"700",padding:"5px",marginLeft:"10px"}}>
                     Instructor
-                </div>
+                </div> */}
                 {/* <div onClick={()=>{
                     clickShow('R',<Reviews/>)
                 }} style={{width:"auto",height:"50px",display:"flex",justifyContent:"center",alignItems:"center",borderBottom:selected['R']||"",fontWeight:"700",padding:"5px",marginLeft:"10px"}}>

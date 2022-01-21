@@ -2,12 +2,15 @@ const express = require('express')
 const Route = express.Router()
 const nodemailer = require('nodemailer')
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+const transport = nodemailer.createTransport({
+    service: "gmail",
     auth: {
-        user: 'baidrishabh443@gmail.com'
+        type: "OAuth2",
+        user: "noreply-recruitment@iiitu.ac.in", //your gmail account you used to set the project up in google cloud console"
+        clientId: process.env.GCID,
+        clientSecret: process.env.GCSECRET,
+        refreshToken: process.env.GREFRESH_TOKEN,
+        accessToken:process.env.GACCESS_TOKEN //access token variable 
     }
 });
 

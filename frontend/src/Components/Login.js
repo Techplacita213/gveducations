@@ -6,9 +6,10 @@ import RoundButton from './RoundButton'
 import axios from 'axios'
 import {context} from './Context'
 import Swal from 'sweetalert2'
+import { LIVE_URL } from '../utils/url'
 
 const durl="http://localhost:5000/"
-const purl="/"
+const purl=LIVE_URL
 
 export default function Login({set}) {
     const [email,setEmail]=useState("")

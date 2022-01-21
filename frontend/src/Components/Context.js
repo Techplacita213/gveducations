@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { LIVE_URL } from '../utils/url';
 //import { FaMapPin } from 'react-icons/fa';
 
 const MyContext = React.createContext();
 const durl="http://localhost:5000/"
-const purl="/"
+const purl=LIVE_URL
 export default class Context extends Component {
     constructor(){
         super()
@@ -15,7 +16,7 @@ export default class Context extends Component {
             user:{},
             course:"",
             setLog:(value)=>{
-                this.setState({isLogged:value})
+                this.setState({isLogged:value,user:{}})
             },
             setUser:(value)=>{
                 this.setState({user:value})

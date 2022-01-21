@@ -7,9 +7,10 @@ import Login from '../Components/Login'
 import {context} from '../Components/Context'
 import {OverlayTrigger,Popover,Spinner} from 'react-bootstrap'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link,useHistory, useLocation} from 'react-router-dom'
+import { LIVE_URL } from '../utils/url'
 const durl="http://localhost:5000/"
-const purl="/"
+const purl=LIVE_URL
 const Options = ({set,isTeacher})=>{
     return(<div style={{display:"flex",flexDirection:"column",top:"60px",right:"10px",position:"absolute",width:"180px",backgroundColor:"white",boxShadow:"0px 0px 10px rgba(0,0,0,0.3)"}}>
         {isTeacher?<Link to="/Admin"><div id="hov" style={{color:'black',cursor:"pointer",width:'100%',padding:"5px",textAlign:"center",textDecoration:"none"}}>Add a course</div></Link>:null}        
@@ -35,6 +36,8 @@ const Loader = ()=>{
 }
 
 export default function Navbar() {
+    const history = useHistory()
+    const location = useLocation()
     const obj=useContext(context)
     const [Select,setSelect]=useState({
         Home:true,
@@ -57,11 +60,11 @@ export default function Navbar() {
         <div style={{overflow:"hidden"}}>
             {obj.isLogged===""?<Loader/>:null}
         <div id="navMain" style={{display:'flex',flexDirection:"row",top:'0',right:"0",left:"0",width:"100%",height:"60px",padding:"5px",paddingLeft:"15px",justifyContent:'space-between',backgroundColor:"white",alignItems:"center",borderBottom:"solid 1px gray"}}>
-            <img src="https://reptro.xoothemes.com/wp-content/uploads/2018/05/cropped-logo-3.png" style={{width:"120px",marginLeft:"20px"}}/>  
+            <img onClick={()=>history.push('/')} src="https://reptro.xoothemes.com/wp-content/uploads/2018/05/cropped-logo-3.png" style={{width:"120px",marginLeft:"20px",cursor:"pointer"}}/>  
             <div id="navb" style={{display:"flex",width:"250px",justifyContent:"space-between",marginRight:"35px",alignItems:"center"}}>
-            <Link to="/" style={{textDecoration:"none"}}><NavItem text="Home" select={Select['Home']} set={setSelect}/></Link>
+            <Link to="/" style={{textDecoration:"none"}}><NavItem text="Home" select={location.pathname==="/"?true:false} set={setSelect}/></Link>
                 {/* <NavItem text="Courses" select={Select['Courses']} set={setSelect}/> */}
-                <Link to="/Contactus" style={{textDecoration:"none"}}><NavItem text="Contact" select={Select['Contact']} set={setSelect}/></Link>
+                <Link to="/Contactus" style={{textDecoration:"none"}}><NavItem text="Contact" select={location.pathname==="/Contactus"?true:false} set={setSelect}/></Link>
                 <div style={{position:"relative"}}>
                 {obj.isLogged?<OverlayTrigger trigger="click" placement="bottom" show={Select.overlay}   overlay={<Options  set={obj.setLog} isTeacher={obj.isTeacher}/>}><FaUser id="idd"/></OverlayTrigger>:<RoundButton func={()=>setlog(true)} text="Login" width="80px" height="35px" padding="5px" backgroundColor="purple" fontSize="15px" fontWeight="700" fontFamily="sans-serif" />}
                 </div>
@@ -114,7 +117,7 @@ export default function Navbar() {
                 <Link to="/"><div style={{width:"100%",padding:"15px",height:"40px",borderTop:"solid rgba(0,0,0,0.25) 1px",display:"flex",flexDirection:"row",alignItems:"center"}}>Home</div></Link>
                 <Link to="/Contactus" style={{textDecoration:"none"}}><div style={{width:"100%",padding:"15px",height:"40px",borderTop:"solid rgba(0,0,0,0.25) 1px",borderBottom:"solid rgba(0,0,0,0.25) 1px",display:"flex",flexDirection:"row",alignItems:"center"}}>Contact us</div></Link> 
                 {obj.isLogged?
-                <a href="/meeting"><div id="hov" style={{color:'black',cursor:"pointer",width:'100%',padding:"15px",borderBottom:"solid rgba(0,0,0,0.25) 1px"}}>Meetings</div></a>:null}
+                <a href={LIVE_URL+"meeting"}><div id="hov" style={{color:'black',cursor:"pointer",width:'100%',padding:"15px",borderBottom:"solid rgba(0,0,0,0.25) 1px"}}>Meetings</div></a>:null}
                 {obj.isLogged? <div id="hov" onClick={()=>{
             axios.get(' /auth/logout',{withCredentials:true}).then((res)=>{
                 obj.setLog(false)

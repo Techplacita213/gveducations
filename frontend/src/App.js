@@ -11,34 +11,38 @@ import Courses from './Components/Courses'
 import Contactus from './Components/Contactus'
 import HomeAdmin from './Components/HomeAdmin'
 import Footer from './Components/Footer'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 
 function App() {
+
   const obj = useContext(context)
   useEffect(()=>{
   })
   return (
     <Context>
-      <Router>
-            <Navbar/>
-            <Switch>
-              <Route exact path="/">
-                <Home/>
-              </Route>
-              <Route exact path="/Course">
-                <Courses/>
-              </Route>
-              <Route exact path="/Contactus">
-                <Contactus/>
-              </Route>
-              <Route exact path="/CourseDetailes/:name">
-                <CourseDetailes/>
-              </Route>      
-              <Route exact path="/Admin">
-                <HomeAdmin/>
-              </Route> 
-            </Switch>
-      
-      </Router>
+        <Router>
+              <Navbar/>
+              <Switch>
+                <Route exact path="/">
+                  <Home/>
+                </Route>
+                <Route exact path="/Course">
+                  <Courses/>
+                </Route>
+                <Route exact path="/Contactus">
+                  <Contactus/>
+                </Route>
+                <Route exact path="/CourseDetailes/:name">
+                  <CourseDetailes/>
+                </Route>      
+                <Route exact path="/Admin">
+                  <HomeAdmin/>
+                </Route> 
+              </Switch>
+        </Router>
       <Footer/>
     </Context>
   );

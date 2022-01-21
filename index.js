@@ -18,9 +18,27 @@ const cours = require('./Routes/courses')
 const EmailVerify = require('./Routes/EmailVerification')
 const Auth=require('./Routes/Auth')
 const User = require('./models/User');
-
-
+const cors = require('cors')
 var ObjectId = require('mongoose').Types.ObjectId;
+
+app.use((req, res, next) => {
+    const allowedOrigins = [
+      "http://localhost:3000"
+    ];
+    const origin = req.headers.origin;
+    console.log(origin)
+    if(allowedOrigins.includes(origin)){
+      res.header("Access-Control-Allow-Origin", origin);
+    }
+    else{
+        res.header("Access-Control-Allow-Origin", "*");
+    }
+    res.header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if(origin!="null")
+        res.header("Access-Control-Allow-Credentials", true);
+    next();
+    });
 
 dotenv.config()
 
@@ -128,6 +146,8 @@ app.get("*",(req,res)=>{
 })
 
 
-
-server.listen(process.env.PORT||5050)
+const port = process.env.PORT||5050
+server.listen(port,()=>{
+    console.log("started listening at ",port)
+})
 

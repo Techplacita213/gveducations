@@ -6,10 +6,10 @@ import PhoneInput from 'react-phone-number-input'
 import {Zoom} from 'react-reveal'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { LIVE_URL } from '../utils/url'
 
 const durl="http://localhost:5000/"
-const purl="/"
-
+const purl=LIVE_URL
 export default function Signup({set,teach}) {
     const [image,setImg]=useState("")
     const [phone,setphone]=useState()
@@ -37,7 +37,7 @@ export default function Signup({set,teach}) {
             }
         }).then((res)=>{
             Swal.fire({
-                test:"Successfully Registered",
+                text:"Successfully Registered",
                 icon:"success",
                 timer:2000
             }).then(()=>{
@@ -45,7 +45,7 @@ export default function Signup({set,teach}) {
             })
        }).catch(error=>{
         Swal.fire({
-            test:error.response?.data?.message,
+            text:error.response?.data?.message,
             icon:"error",
             timer:2000
         })

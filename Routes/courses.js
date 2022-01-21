@@ -55,28 +55,19 @@ Route.get('/getCourses',async (req,res)=>{
 
 // })
 
-Route.post('/postCourses',upload.single('productImage'),verifyToken,async (req,res)=>{
+Route.post('/postCourses',verifyToken,async (req,res)=>{
   try{
-   //console.log("runing") 
-   console.log(req.body.Timings) 
-   req.body.Features=JSON.parse(req.body.Features)
-   req.body.Topics=JSON.parse(req.body.Topics)
-   //req.body.Timings=JSON.parse(req.body.Timings)
-   //console.log(req.body)
-   
+ 
+    console.log(req.body)
     const {error} = await validCourse(req.body)
     //console.log("run")
     if(error)
-        return res.send(error.message)
+        return res.status(400).send({message:error.message})
 
-
-    //create new room for this course
-
-    const course= new Course({...req.body,productImage:req.file.path})
+    const course= new Course({...req.body,instructorID:req.user.id})
     //console.log(course)
     
         const result = await course.save()
-      
         
         createRoom(course._id)
     }

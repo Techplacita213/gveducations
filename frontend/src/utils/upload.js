@@ -1,5 +1,7 @@
-import firebase from 'firebase'
-import {v4 as uuid} from 'uuid'
+
+import {initializeApp} from "firebase/app"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 var firebaseConfig = {
     apiKey: "AIzaSyDF5EKbmxy1C-fGGYNxJSyrxl-fPfDKGos",
     authDomain: "docto-c3271.firebaseapp.com",
@@ -10,26 +12,34 @@ var firebaseConfig = {
     measurementId: "G-Q9MKK3RK4Q"
   };
   // Initialize Firebase
-let fire=firebase.initializeApp(firebaseConfig);
+let fire=initializeApp(firebaseConfig);
 
-const ref =  firebase.storage().ref()
+const storage =  getStorage(fire)
+const sref = ref(storage)
 
 export async function uploadFile(file){
 
-// Create a reference to 'mountains.jpg'
-var mountainsRef = ref.child(file.name);
 
 // Create a reference to 'images/mountains.jpg'
-var mountainImagesRef = ref.child('images/'+file.name);
+var mountainImagesRef =ref(storage,'images/'+file.name);
 
   const metadata={
       type:file.type
   }
-  var uploadTask = ref.child('images/'+file.name).put(file, metadata);
+  var uploadTask = uploadBytes(mountainImagesRef, file, metadata);
+   // false 
+  
+  var url;
 
-  let url= await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) =>{
-    return downloadURL
-  }
-    );
+    await uploadTask.then(async (snapshot)=>{
+        await getDownloadURL(snapshot.ref).then((downloadURL) => { 
+            url=downloadURL
+        });
+      })
+  
+    
   return url
 }
+
+
+
