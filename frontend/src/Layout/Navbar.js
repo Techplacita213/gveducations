@@ -60,7 +60,8 @@ export default function Navbar() {
         <div style={{overflow:"hidden"}}>
             {obj.isLogged===""?<Loader/>:null}
         <div id="navMain" style={{display:'flex',flexDirection:"row",top:'0',right:"0",left:"0",width:"100%",height:"60px",padding:"5px",paddingLeft:"15px",justifyContent:'space-between',backgroundColor:"white",alignItems:"center",borderBottom:"solid 1px gray"}}>
-            <img onClick={()=>history.push('/')} src="https://reptro.xoothemes.com/wp-content/uploads/2018/05/cropped-logo-3.png" style={{width:"120px",marginLeft:"20px",cursor:"pointer"}}/>  
+            {/* <img onClick={()=>history.push('/')} src="https://reptro.xoothemes.com/wp-content/uploads/2018/05/cropped-logo-3.png" style={{width:"120px",marginLeft:"20px",cursor:"pointer"}}/>   */}
+            <div style={{fontWeight:"bold",color:"#242323",fontSize:"20px",fontFamily:"sans-serif",height:"30px",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer"}}>Gveducations</div>
             <div id="navb" style={{display:"flex",width:"250px",justifyContent:"space-between",marginRight:"35px",alignItems:"center"}}>
             <Link to="/" style={{textDecoration:"none"}}><NavItem text="Home" select={location.pathname==="/"?true:false} set={setSelect}/></Link>
                 {/* <NavItem text="Courses" select={Select['Courses']} set={setSelect}/> */}

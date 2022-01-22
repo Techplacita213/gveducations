@@ -14,8 +14,8 @@ export default function Header() {
                 {!obj.isLogged?<div style={{maxWidth:"350px",height:"300px",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                     <RoundButton func={()=>{
                         setteach(false)
-                        sets(!shows)}} width="290px" height="60px" text="Signup as Student" backgroundColor="orange" fontSize="23px" fontFamily="sans-serif"/>
-                        <span style={{marginTop:'10px',marginBottom:"10px",fontSize:"25px",color:"white"}}>OR</span>
+                        sets(!shows)}} marginBottom="35px" width="290px" height="60px" text="Signup as Student" backgroundColor="orange" fontSize="23px" fontFamily="sans-serif"/>
+                        
                         <RoundButton func={()=>{
                         setteach(true)
                         sets(!shows)}} width="290px" height="60px" text="Signup as Teacher" backgroundColor="orange" fontSize="23px" fontFamily="sans-serif"/>

@@ -1,2 +1,1 @@
-1 instructor section in the course.
-2 courses adding.
+1 Replace Reptro from navbar with  GVEducations.
