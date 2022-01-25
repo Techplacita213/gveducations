@@ -96,16 +96,18 @@ export default function CourseDetailes(props) {
         const val=await localStorage.getItem(`${name}`)
         if(localStorage.getItem(`${name}`)==null||val===""){
             
-            const dat=await obj.findByName(name)
+            const dat= obj.findByName(name)
+            console.log("dat",dat)
             if(dat!==""){
-                await setData(dat)
+                 setData(dat)
                 await localStorage.setItem(`${name}`,JSON.stringify(dat))
+                clickShow('O',<Overview data={dat}/>)
             }
-            clickShow('O',<Overview data={data}/>)
+            
         }
         else{
            await setData(await JSON.parse(localStorage.getItem(`${name}`)))
-           clickShow('O',<Overview data={JSON.parse(localStorage.getItem(`${name}`))}/>)
+           clickShow('O',<Overview data={await JSON.parse(localStorage.getItem(`${name}`))}/>)
         }
        
     }

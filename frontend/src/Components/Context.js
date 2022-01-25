@@ -14,7 +14,7 @@ export default class Context extends Component {
             isAdmin:false,
             isTeacher:false,
             user:{},
-            course:"",
+            course:"loading",
             setLog:(value)=>{
                 this.setState({isLogged:value,user:{}})
             },

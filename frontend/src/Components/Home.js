@@ -6,6 +6,7 @@ import RoundButton from './RoundButton'
 import {Link} from 'react-router-dom'
 import Header from '../Layout/Header'
 import {context} from './Context'
+import {Spinner} from "react-bootstrap"
 
 
 const arrImg=['https://www.gettingsmart.com/wp-content/uploads/2017/01/Teacher-Helping-Young-Students-at-Table-Feature-Image.jpg',
@@ -93,7 +94,7 @@ Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit ame
                    {/* <Link to="/CourseDetailes/JavaScript" style={{textDecoration:"none",textDecorationColor:"none",color:"black"}}> <Course/></Link>
                     <Course/>
                     <Course/> */}
-                    {obj.course!=""?obj.course.map((data)=>{
+                    {obj.course==="loading"?<Spinner color="purple"/>:obj.course!=""?obj.course.map((data)=>{
                         return(<Link to={`/CourseDetailes/${data.name}`} style={{color:"black",textDecoration:"none"}}><Course data={data} /></Link>)
                     }):<h1>No Courses yet!</h1>}
 
