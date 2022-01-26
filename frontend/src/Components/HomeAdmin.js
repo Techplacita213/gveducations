@@ -130,7 +130,7 @@ export default function Home() {
             <div style={{width:"400px",height:"auto",padding:"10px",backgroundColor:"rgba(255,255,255,0.9)",boxShadow:"0px 0px 25px rgba(0,0,0,0.5)",display:'flex',flexDirection:"column",alignItems:"center"}}>
                 <Input val={name} place="Name " chg={setname} />               
                 
-                    <Input chg={setdur} value={dur} place="Duration (In Weeks)" />
+                    <Input chg={setdur}  value={dur} place="Duration (In Weeks)" />
                
 
                 <div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",width:"90%"}}>

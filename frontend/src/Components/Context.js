@@ -43,9 +43,9 @@ export default class Context extends Component {
     componentDidMount(){
         axios.get(purl+'course/getCourses').then((res)=>{
             this.setState({course:res.data||""})
-            console.log(res.data)
+          
         }).catch((error)=>{
-            console.log(error.response||"")
+            this.setState({course:""})
         })
        axios.get(purl+'auth/refresh',{withCredentials:true}).then((res)=>{
            console.log(res)
