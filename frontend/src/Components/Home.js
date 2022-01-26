@@ -94,7 +94,7 @@ Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit ame
                    {/* <Link to="/CourseDetailes/JavaScript" style={{textDecoration:"none",textDecorationColor:"none",color:"black"}}> <Course/></Link>
                     <Course/>
                     <Course/> */}
-                    {obj.course==="loading"?<Spinner color="purple"/>:obj.course!=""?obj.course.map((data)=>{
+                    {obj.course==="loading"?<Spinner animation="border"/>:obj.course!=""?obj.course.map((data)=>{
                         return(<Link to={`/CourseDetailes/${data.name}`} style={{color:"black",textDecoration:"none"}}><Course data={data} /></Link>)
                     }):<h1>No Courses yet!</h1>}
 
